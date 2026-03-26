@@ -1,0 +1,14 @@
+{
+  "name": "code-security-api",
+  "version": "1.0.0",
+  "description": "AI-powered code security scanner API — find vulnerabilities in code snippets",
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev",
+    "test": "node test/test-api.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0"
+  },
+  "license": "MIT"
+}
