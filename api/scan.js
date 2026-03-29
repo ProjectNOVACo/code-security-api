@@ -50,7 +50,14 @@ export default async function handler(req, res) {
   const apiKey = getApiKey(req);
   if (!apiKey) return res.status(401).json({ error: 'API key required. Set X-API-Key or X-RapidAPI-Key header.' });
 
-  const { code, filename = 'input.js', deep = false } = req.body || {};
+  let { code, filename, language, deep = false } = req.body || {};
+
+  // If language provided but no filename, create a filename with the right extension
+  if (language && !filename) {
+    const langToExt = { python: 'py', javascript: 'js', typescript: 'ts', ruby: 'rb', go: 'go', rust: 'rs', java: 'java', php: 'php', csharp: 'cs', swift: 'swift', shell: 'sh' };
+    filename = `input.${langToExt[language.toLowerCase()] || 'js'}`;
+  }
+  filename = filename || 'input.js';
 
   if (!code || typeof code !== 'string') {
     return res.status(400).json({ error: 'Missing "code" field. Send { "code": "your code here", "filename": "app.py" }' });
